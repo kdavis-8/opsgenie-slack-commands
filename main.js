@@ -6,6 +6,7 @@
 'use strict';
 
 const opsgenie = require('opsgenie-sdk');
+const client = require('opsgenieclient');
 const qs = require('querystring');
 
 exports.handler = function (event, context, callback) {
