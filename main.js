@@ -1,12 +1,11 @@
 /**
     * @author Kevin Davis
     * @version 08/27/18
-    * @updated v1.0 08/27/18
+    * @updated v1.0 8/27/18
     */
 'use strict';
 
 const opsgenie = require('opsgenie-sdk');
-const client = require('opsgenieclient');
 const qs = require('querystring');
 
 exports.handler = function (event, context, callback) {
@@ -27,14 +26,13 @@ exports.handler = function (event, context, callback) {
     });
 
     var create_alert_json = {
-        message: params.text,
-        entity: "OnDemand Conference Bridge",
-        responders: [
-            {
-            type: "team",
-            name: "DGC"
-        }
-        ]
+        message: params.text
+        description: 'Custom alert executed by Lambda through a slack message',
+        teams: [ { name: 'DGC' } ],
+        tags: [ 'Slack', 'Lambda' ],
+        priority: 'P1',
+        Source: [ 'slack' ],
+        details: { State:'Warn', MonitorName: 'MapsMonitor' }
     };
 
     opsgenie.alertV2.create(create_alert_json, function (error, alert) {
